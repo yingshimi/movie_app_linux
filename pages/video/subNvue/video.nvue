@@ -1,0 +1,410 @@
+<template>
+	<view style="position: relative; height: 270px; background-color: #000000;">
+		<!-- 视频播放器 -->
+		<view class="player-container" :class="{'player-visible': !play}">
+			<myvideo :video_url="video_url" :title="detail.title" ref="myvideo"></myvideo>
+		</view>
+		
+		<!-- 头部信息区域 -->
+		<view class="header-container" :class="{'header-hidden': !play}">
+			<!-- 海报模糊背景 -->
+			<view class="poster-blur">
+				<image class="blur-image" :src="'https://image.tmdb.org/t/p/original' + (detail && detail.backdrop_path)" mode="aspectFill"></image>
+			</view>
+			
+			<!-- 头部内容区域 -->
+			<view class="header-content">
+				<!-- 海报容器 -->
+				<view class="poster-container">
+					<image class="poster-image" :src="'https://image.tmdb.org/t/p/original' + (detail && detail.poster_path)" mode="aspectFill"></image>
+					
+					<!-- 播放按钮 -->
+					<view class="play-button" @click="toPlay">
+						<text class="play-icon">▶</text>
+					</view>
+					
+					<!-- 电影标签 -->
+					<view class="movie-tag" v-if="detail && detail.vote_average">
+						<text class="tag-text">{{ detail.vote_average.toFixed(1) }}</text>
+					</view>
+				</view>
+				
+				<!-- 电影信息区域 -->
+				<view class="movie-info">
+					<!-- 标题 -->
+					<text class="movie-title">{{ detail && detail.title }}</text>
+					
+					<!-- 原始标题 -->
+					<text v-if="detail && detail.original_title" class="movie-original-title">{{ detail.original_title }}</text>
+					
+					<!-- 基本信息 -->
+					<view class="movie-meta">
+						<text class="meta-text">{{ detail && detail.release_date && detail.release_date.substring(0, 4) || '' }} / </text>
+						<text class="meta-text">{{ detail && detail.runtime || 0 }}分钟</text>
+					</view>
+					
+					<!-- 评分区域 -->
+					<view class="rating-box">
+						<text class="rating-score">{{ detail && detail.vote_average }}</text>
+						<view class="star-container">
+							<text v-for="i in 5" :key="i" class="star" 
+							:class="i <= Math.floor(detail && detail.vote_average/2) ? 'star-full' : 'star-empty'">★</text>
+						</view>
+					</view>
+				</view>
+			</view>
+			
+			<!-- 返回按钮 -->
+			<view class="back-button" @click="goBack">
+				<text class="back-icon">←</text>
+			</view>
+		</view>
+		
+		<!-- 视频控制按钮 - 只在视频播放时显示 -->
+		<view class="video-controls" v-if="!play">
+			<view class="back-to-detail" @click="goBack">
+				<text class="back-icon">✕</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<style scoped>
+	/* 容器样式 */
+	.header-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #000000;
+		z-index: 10;
+		opacity: 1;
+		transform: translateY(0);
+		transition-property: opacity, transform;
+		transition-duration: 400ms;
+		transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	
+	.header-hidden {
+		opacity: 0;
+		transform: translateY(-100%);
+		z-index: 1;
+	}
+	
+	/* 播放器容器 */
+	.player-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #000000;
+		z-index: 1;
+		opacity: 0;
+		transform: translateY(20px);
+		transition-property: opacity, transform;
+		transition-duration: 400ms;
+		transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	
+	.player-visible {
+		opacity: 1;
+		transform: translateY(0);
+		z-index: 11;
+	}
+	
+	/* 海报模糊背景 */
+	.poster-blur {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0.7;
+	}
+	
+	.blur-image {
+		flex: 1;
+		width: 750px;
+		height: 270px;
+		opacity: 0.8;
+	}
+	
+	/* 头部内容区域 */
+	.header-content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 50px 15px 10px 15px;
+		flex-direction: row;
+		align-items: center;
+	}
+	
+	/* 海报容器 */
+	.poster-container {
+		width: 120px;
+		height: 180px;
+		border-radius: 8px;
+		margin-right: 15px;
+		overflow: hidden;
+		background-color: #333333;
+		position: relative;
+		box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+	}
+	
+	.poster-image {
+		width: 120px;
+		height: 180px;
+		border-radius: 8px;
+	}
+	
+	/* 播放按钮 */
+	.play-button {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 50px;
+		height: 50px;
+		margin-left: -25px;
+		margin-top: -25px;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 25px;
+		justify-content: center;
+		align-items: center;
+		border-width: 2px;
+		border-color: #FFFFFF;
+		opacity: 0.8;
+	}
+	
+	.play-icon {
+		color: #FFFFFF;
+		font-size: 20px;
+		text-align: center;
+	}
+	
+	/* 电影标签 */
+	.movie-tag {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		background-color: rgba(255, 87, 34, 0.9);
+		border-radius: 10px;
+		padding: 2px 8px;
+	}
+	
+	.tag-text {
+		color: #FFFFFF;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	
+	/* 电影信息区域 */
+	.movie-info {
+		flex: 1;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+	
+	.movie-title {
+		color: #FFFFFF;
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: 5px;
+		lines: 2;
+		text-overflow: ellipsis;
+	}
+	
+	.movie-original-title {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 14px;
+		margin-bottom: 8px;
+		lines: 1;
+		text-overflow: ellipsis;
+	}
+	
+	.movie-meta {
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 10px;
+		background-color: rgba(0, 0, 0, 0.2);
+		border-radius: 15px;
+		padding: 3px 10px;
+		align-self: flex-start;
+	}
+	
+	.meta-text {
+		color: rgba(255, 255, 255, 0.8);
+		font-size: 12px;
+	}
+	
+	/* 评分区域 */
+	.rating-box {
+		flex-direction: row;
+		align-items: center;
+		margin-top: 5px;
+	}
+	
+	.rating-score {
+		color: #FF9800;
+		font-size: 18px;
+		font-weight: bold;
+		margin-right: 8px;
+	}
+	
+	.star-container {
+		flex-direction: row;
+	}
+	
+	.star {
+		color: rgba(255, 255, 255, 0.2);
+		font-size: 14px;
+		margin-right: 2px;
+	}
+	
+	.star-full {
+		color: #FF9800;
+	}
+	
+	.star-empty {
+		color: rgba(255, 255, 255, 0.2);
+	}
+	
+	/* 返回按钮 */
+	.back-button {
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		width: 36px;
+		height: 36px;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 18px;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.back-icon {
+		color: #FFFFFF;
+		font-size: 18px;
+	}
+	
+	/* 视频控制按钮 */
+	.video-controls {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 12;
+		flex-direction: row;
+		justify-content: flex-end;
+		padding: 15px;
+	}
+	
+	.back-to-detail {
+		width: 32px;
+		height: 32px;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 16px;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	}
+</style>
+
+<script>
+	import profileVue from '../../../components/profile/profile.vue';
+	import fIconBtnVue from '../../../components/myvideo/components/f-icon-btn.vue';
+	import {
+		getDetail
+	} from '@/static/api/other';
+
+	export default {
+		computed: {
+			score() {
+				return this.detail && this.detail.vote_average ? this.detail.vote_average.toFixed(1) : '0.0';
+			},
+			spacedText() {
+				return this.detail && this.detail.title ? this.detail.title.split('') : [];
+			},
+		},
+		components: {
+			profileVue,
+			fIconBtnVue
+		},
+		onLoad(options) {
+			// 获取状态栏高度，适配不同机型
+			const statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.statusBarHeight = statusBarHeight;
+			
+			// 设置视频URL
+			this.video_url = options.video_url;
+			console.log('=====================这是视频入口链接==========================');
+			console.log(options.video_url);
+			console.log(decodeURIComponent(options.video_url));
+			
+			// 获取电影详情
+			if (options.id) {
+				this.mid = options.id;
+				this.getDetail(options.id);
+			}
+		},
+		data() {
+			return {
+				detail: {},
+				mid: '385687',
+				text: '昔日的死对头塞弗主动找上门来告知多米尼克和整个飞车家族都将遭遇危险。随后，多米尼克从"小无名氏"先生处得知飞车家族的几位朋友接到了假任务。为了拯救众人，唐老大和莱蒂前往罗马救人，而把小儿子托给米娅和雅各布照顾。在罗马的交锋中，唐老大发现对手叫但丁，是毒枭赫南·雷耶斯的儿子；而他却并不想让多米尼克和飞车家族立刻消失，而是要慢慢折磨他们，就连曾经帮助过飞车家族或是有关联的人也不会放过......',
+				video_url: 'http://vjs.zencdn.net/v/oceans.mp4',
+				play: true,
+				isExpanded: false,
+				textHeight: '0px',
+				statusBarHeight: 0
+			};
+		},
+		methods: {
+			// 开始播放视频
+			toPlay() {
+				this.play = false;
+				setTimeout(() => {
+					// 延迟调用播放，确保动画过渡后再播放
+					this.$refs.myvideo && this.$refs.myvideo.playOrPause();
+				}, 500);
+			},
+			
+			// 展开简介
+			toggleExpand() {
+				uni.navigateTo({
+					url: '/pages/profile/profile?text=' + encodeURIComponent(this.text)
+				});
+			},
+			
+			// 获取电影详情
+			getDetail(mid) {
+				getDetail(mid).then((resp) => {
+					console.log('====================resp是什么=========================')
+					console.log(resp.data)
+					this.detail = resp.data.data
+				}).catch(err => {
+					console.error('获取电影详情失败:', err);
+				});
+			},
+			
+			// 返回按钮处理
+			goBack() {
+				// 如果正在播放视频，切换回详情
+				if (!this.play) {
+					this.play = true;
+					// 暂停视频播放
+					setTimeout(() => {
+						this.$refs.myvideo && this.$refs.myvideo.pause();
+					}, 300);
+				} else {
+					// 否则返回上一页
+					uni.navigateBack();
+				}
+			}
+		},
+	};
+</script>

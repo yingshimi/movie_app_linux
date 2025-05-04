@@ -1,0 +1,255 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true,
+				"navigationBarBackgroundColor": "#FF6699",
+				 "navigationBarTitleText": "" // 导航栏标题
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				// "navigationBarTitleText": ""
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/edit",
+			"style": {
+				"navigationBarTitleText": "编辑资料"
+			}
+		},
+		{
+			"path": "pages/youtube/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/video/video",
+			"style": {
+				"navigationBarTitleText": "播放器",
+				"app-plus": {
+					"scrollIndicator": "none",
+					"titleNView": false,
+					"subNVues": [{
+						"id": "top",
+						"path": "./pages/video/subNvue/video",
+						"style": {
+							"height": "225px",
+							"width": "100%"
+						}
+					}]
+				},
+				"h5": {
+					"scrollIndicator": "none",
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/fileList/fileList",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/cloud/cloud",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/movie/movie",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationStyle": "custom",
+				// "navigationBarTitleText": "视频分类",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationStyle": "custom"
+				// "navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/recommend/recommend",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/imageStitch/imageStitch",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/showSearch/showSearch",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/series/series",
+			"style": {
+				"navigationBarTitleText": "片单"
+			}
+		},
+		{
+			"path": "pages/article/article",
+			"style": {
+				"navigationBarTitleText": "文章"
+			}
+		},
+		{
+			"path": "pages/article-editor/article-editor",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/articleList/articleList",
+			"style": {
+				"navigationBarTitleText": "文章列表"
+			}
+		},
+		{
+			"path": "pages/editor/editor",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/video/youtube-player",
+			"style": {
+				"navigationBarTitleText": "YouTube播放器",
+				"app-plus": {
+					"scrollIndicator": "none",
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/videos/list",
+			"style": {
+				"navigationBarTitleText": "视频列表",
+				"enablePullDownRefresh": true
+			}
+		}
+	],
+
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "white",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": true,
+		"backgroundTextStyle": "dark",
+		"app-plus": {
+			"scrollIndicator": "none",
+			"pullToRefresh": {
+				"support": true,
+				"color": "#007AFF",
+				"style": "circle"
+			}
+		}
+	},
+	"uniIdRouter": {},
+
+	"tabBar":
+
+	// {
+	// 	"custom": true, // 启用自定义 tabBar
+	// 	"color": "#7A7E83",
+	// 	"selectedColor": "#3cc51f",
+	// 	"borderStyle": "black",
+	// 	"backgroundColor": "#ffffff",
+	// 	"list": [] // 清空原生 tabBar 的 list
+	// }
+	{
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "none",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"iconfontSrc": "static/iconfont.ttf", // 字体文件路径
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconfont": {
+					"text": "\ue638",
+					"selectedText": "\ue638",
+					"fontSize": "24px",
+					"color": "#7A7E83",
+					"selectedColor": "#3cc51f"
+				},
+				"text": "首页"
+			}, {
+				"pagePath": "pages/test/test",
+				"iconfont": {
+					"text": "\ue670",
+					"selectedText": "\ue670",
+					"fontSize": "24px",
+					"color": "#7A7E83",
+					"selectedColor": "#3cc51f"
+				},
+				"text": "视频"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconfont": {
+					"text": "\ue603",
+					"selectedText": "\ue603",
+					"fontSize": "24px",
+					"color": "#7A7E83",
+					"selectedColor": "#3cc51f"
+				},
+				"text": "我的"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

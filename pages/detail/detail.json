@@ -1,0 +1,118 @@
+{
+					title: "速度与激情10",
+					originalTitle: "Fast X",
+					poster: "",  // 电影海报URL
+					backdrop: "", // 背景图URL
+					year: "2023",
+					countries: ["美国"],
+					duration: "142",
+					quality: "4K",
+					rating: "8.9",
+					ratingCount: "123,456",
+					tags: ["动作", "冒险", "犯罪", "惊悚", "赛车", "家庭", "爆炸", "特效"],
+					summary: `昔日的死对头塞弗主动找上门来告知多米尼克和整个飞车家族都将遭遇危险。随后，多米尼克从"小无名氏"先生处得知飞车家族的几位朋友接到了假任务。为了拯救众人，唐老大和莱蒂前往罗马救人，而把小儿子托给米娅和雅各布照顾。
+
+在罗马的交锋中，唐老大发现对手叫但丁，是毒枭赫南·雷耶斯的儿子；而他却并不想让多米尼克和飞车家族立刻消失，而是要慢慢折磨他们，就连曾经帮助过飞车家族或是有关联的人也不会放过......
+
+故事发展到现在，已经从当初的非法赛车文化逐渐演变为一个关于家族和团队的史诗般的冒险传奇。`,
+					cast: [{
+							name: "范·迪塞尔",
+							role: "唐老大",
+							profile_path: ""  // 演员头像URL
+						},
+						{
+							name: "米歇尔·罗德里格兹",
+							role: "莱蒂",
+							profile_path: ""
+						},
+						{
+							name: "泰瑞斯·吉布森",
+							role: "罗曼",
+							profile_path: ""
+						},
+						{
+							name: "卢达克里斯",
+							role: "特杰",
+							profile_path: ""
+						},
+						{
+							name: "约翰·塞纳",
+							role: "雅各布",
+							profile_path: ""
+						},
+						{
+							name: "娜塔莉·艾玛努埃尔",
+							role: "拉姆齐",
+							profile_path: ""
+						},
+						{
+							name: "杰森·莫玛",
+							role: "但丁",
+							profile_path: ""
+						},
+						{
+							name: "海伦·米伦",
+							role: "玛格达琳",
+							profile_path: ""
+						}
+					],
+					photos: [
+						{ file_path: "" },
+						{ file_path: "" },
+						{ file_path: "" },
+						{ file_path: "" },
+						{ file_path: "" },
+						{ file_path: "" }
+					],
+					trailers: [{
+						url: "",
+						duration: "02:25",
+						cover: ""  // 预告片封面图URL
+					}],
+					commentCount: 5423,
+					comments: [{
+							username: "电影爱好者",
+							time: "2023-05-20",
+							rating: 4,
+							likes: 328,
+							replies: 42,
+							content: "这部电影的动作场面非常震撼，特效也做得很棒，但情节有些薄弱。总体来说还是一部不错的娱乐片。",
+							avatar: ""  // 用户头像URL
+						},
+						{
+							username: "速激粉丝",
+							time: "2023-05-19",
+							rating: 5,
+							likes: 245,
+							replies: 18,
+							content: "作为系列的忠实粉丝，这部电影没有让我失望。虽然情节越来越离谱，但正是这种不断突破的感觉让我着迷。",
+							avatar: ""
+						}
+					],
+					recommendations: [{
+							title: "速度与激情9",
+							rating: "8.5",
+							poster: ""  // 推荐电影海报URL
+						},
+						{
+							title: "速度与激情8",
+							rating: "8.7",
+							poster: ""
+						},
+						{
+							title: "疾速追杀4",
+							rating: "9.0",
+							poster: ""
+						},
+						{
+							title: "碟中谍7",
+							rating: "8.8",
+							poster: ""
+						},
+						{
+							title: "壮志凌云2",
+							rating: "8.6",
+							poster: ""
+						}
+					]
+				}
